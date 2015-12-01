@@ -2,7 +2,9 @@ package com.robogame;
 
 import java.util.Random;
 
-public class Task {
+public class Task  {
+
+
     private int taskNumber = 1;
 
     public void runTask() {
@@ -91,5 +93,6 @@ public class Task {
             e.printStackTrace();
         }
     }
+
 
 }
