@@ -5,7 +5,7 @@ import java.util.*;
 
 public class MapRobot extends HashMap {
     private Map<String, Robot> mapRobot = new HashMap<String, Robot>();
-    private static int workingRobots = 3;
+    private static int workingRobots = 4;
     Robot robot = null;
     ArrayList<String> robotsName = new ArrayList<String>();
     ListTask listTask = new ListTask();
@@ -15,6 +15,7 @@ public class MapRobot extends HashMap {
         for (Map.Entry<String, Robot> e : mapRobot.entrySet()) {
             robotsName.add(e.getKey());
         }
+        System.out.println("Создан список роботов");
     }
 
     public MapRobot() {
@@ -24,6 +25,7 @@ public class MapRobot extends HashMap {
             robotsName.add(robot.getName());
             robot = null;
         }
+        System.out.println("Создан список роботов");
     }
 
     public Robot getFirstRobot() {

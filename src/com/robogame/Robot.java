@@ -19,6 +19,7 @@ public class Robot extends Thread  {
         System.out.println("...Создан робот с номером " + Integer.toString(number) + "...");
         number++;
         setTaskList(listTask);
+        getTask();
          this.start();
     }
 
@@ -36,7 +37,7 @@ public class Robot extends Thread  {
         return number;
     }
 
-    public void getTaskFor() {
+    private void getTask() {
         task = taskList.getTask();
     }
 
@@ -56,7 +57,7 @@ public class Robot extends Thread  {
 
     @Override
     public void run() {
-
+        System.out.println("Запустился run" + this.name);
         runTask();
     }
 }

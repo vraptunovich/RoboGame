@@ -26,7 +26,7 @@ public class ListTask {
     public ListTask() {
         this.tasks = new ArrayList<Task>(this.TASK_LENGHT);
         for (int i = 0; i < this.TASK_LENGHT; i++) addTask(new Task());
-
+        System.out.println("Создан список задач");
     }
 
     public void addTask(Task task) {
