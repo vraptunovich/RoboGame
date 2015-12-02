@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Vova on 25.11.2015.
  */
-public class ListTask {
+public class ListTask extends ArrayList {
 
 
     public static int TASK_LENGHT = 3;
@@ -35,7 +35,7 @@ public class ListTask {
         this.autoAddListTask = autoAddListTask;
         this.log = log;
     }
-
+/*
     public Task getTask(int n) {
         Task tempTask;
         if (listTasks.size() > 0) {
@@ -44,7 +44,7 @@ public class ListTask {
             return tempTask;
         } else return null;
     }
-
+*/
     private void print(String s) {
         log.addLog(s);
     }

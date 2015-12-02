@@ -14,7 +14,7 @@ public class RoboTask {
 
     public RoboTask(Log log) {
         this.log = log;
-        this.listTask=new ListTask(log);
+        this.listTask = new ListTask(log);
 
     }
 
@@ -42,9 +42,13 @@ public class RoboTask {
     }
 
     public void createTaskList(int n, boolean working, int name, int speed) {
+        ListTask ltask = new ListTask(this.log);
         for (int i = 0; i < n; i++) {
             Task task = new Task(log, working, name, speed);
+            ltask.addTask(task);
+            task = null;
         }
+        this.listTask = ltask;
     }
 
     public void createRoboMap(int n) {
@@ -55,7 +59,6 @@ public class RoboTask {
             robot = null;
         }
     }
-
 
 
 }

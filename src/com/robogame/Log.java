@@ -29,6 +29,7 @@ public class Log {
         try {
             out.write(new Date(System.currentTimeMillis()).toString() + ":" + s + " \r\n");
             out.flush();
+            showMeassage(s);
         } catch (IOException e) {
             e.printStackTrace();
         }

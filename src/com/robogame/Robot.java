@@ -38,7 +38,7 @@ public class Robot extends Thread {
 
         if (!taskList.isEmpty()) {
 
-            task = taskList.getTask(0);
+            task =(Task) taskList.get(0);
             if (task == null) {
                 print(this.name + " не получил задание ");
                 return false;
