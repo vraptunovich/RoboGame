@@ -1,63 +1,103 @@
 package com.robogame;
 
-import java.util.List;
-
-public class Robot extends Thread  {
-    private String name;
-    private static int number = 1;
+public class Robot extends Thread {
     private Task task = null;
     private ListTask taskList;
-    private Boolean work = false;
+    private boolean finishTask = true;
+    private boolean workingNow = false;
+    private boolean autoGetTask = false;
+    private boolean pause = false;
+    private String name;
+    private Log log = null;
+private static int numNameRobot=0;
 
-    private void setTaskList(ListTask taskList) {
+    public Robot(boolean autoGetTask, Log log, String name, ListTask taskList) {
+        this.autoGetTask = autoGetTask;
+        this.log = log;
+        this.name = "Робот №"+Integer.toString(this.numNameRobot);
+        this.numNameRobot++;
         this.taskList = taskList;
     }
 
-    public Robot(ListTask listTask) {
+    @Override
+    public void run() {
 
-        this.name = Integer.toString(number);
-        System.out.println("...Создан робот с номером " + Integer.toString(number) + "...");
-        number++;
-        setTaskList(listTask);
-        getTask();
-         this.start();
+        while (autoGetTask == false || !taskList.isEmpty()) {
+            if (setTask()) {
+                task.runTask();
+                delteTask();
+            }
+        }
     }
 
-    public void setTaskForRobot(Task taskForRobot) {
-        if (this.task == null)
-            this.task = taskForRobot;
+
+    public boolean setTask() {
+
+        task = taskList.getTask();
+        if (task == null) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+
+    public void delteTask() {
+        this.task = null;
+    }
+
+    public Log getLog() {
+        return log;
+    }
+
+    private void print(String s) {
+        log.addLog(s);
+    }
+
+    public boolean isAutoGetTask() {
+        return autoGetTask;
+    }
+
+    public void setAutoGetTask(boolean autoGetTask) {
+        this.autoGetTask = autoGetTask;
+    }
+
+    public boolean isFinishTask() {
+        return finishTask;
+    }
+
+    public void setFinishTask(boolean finishTask) {
+        this.finishTask = finishTask;
     }
 
     public String getNameRobot() {
         return name;
     }
 
-
-    public static int getNumber() {
-        return number;
+    public void setNameRobot(String name) {
+        this.name = name;
     }
 
-    private void getTask() {
-        task = taskList.getTask();
+    public boolean isPause() {
+        return pause;
     }
 
-    private void deleteTask() {
-        this.task = null;
-        work = false;
+    public void setPause(boolean pause) {
+        this.pause = pause;
     }
 
-    private void runTask() {
-        if (task != null && work == false) {
-            task.runTask();
-            work = true;
-        }
-        deleteTask();
+    public Task getTask() {
+        return task;
+    }
+
+    public boolean isWorkingNow() {
+        return workingNow;
+    }
+
+    public void setWorkingNow(boolean workingNow) {
+        this.workingNow = workingNow;
     }
 
 
-    @Override
-    public void run() {
-        System.out.println("Запустился run" + this.name);
-        runTask();
-    }
 }

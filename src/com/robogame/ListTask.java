@@ -1,7 +1,5 @@
 package com.robogame;
 
-import config.Config;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,38 +8,82 @@ import java.util.List;
  */
 public class ListTask {
 
-    private boolean autoAddTask = true;
-    private List<Task> tasks;
-    private static int TASK_LENGHT = 10;
+
+    public static int TASK_LENGHT = 10;
+    private List<Task> listTasks;
+    private boolean autoAddListTask = false;
+    private Log log ;
+
+    public ListTask(Log lg) {
+        this.log=lg;
+        this.listTasks = new ArrayList<Task>(this.TASK_LENGHT);
+        for (int i = 0; i < this.TASK_LENGHT; i++) addTask(new Task(lg));
+        System.out.println("Создан список задач");
+
+    }
+
+    private void print(String s) {
+        log.addLog(s);
+    }
+
+
+    public ListTask(Log log, boolean autoAddListTask) {
+        this.log = log;
+        this.autoAddListTask = autoAddListTask;
+        this.listTasks = new ArrayList<Task>(this.TASK_LENGHT);
+        for (int i = 0; i < this.TASK_LENGHT; i++) addTask(new Task(log));
+        System.out.println("Создан список задач");
+
+    }
+
+    public ListTask(List<Task> tasks, boolean autoAddListTask, Log log) {
+        this.listTasks = tasks;
+        this.autoAddListTask = autoAddListTask;
+        this.log = log;
+    }
 
     public Task getTask() {
         Task tempTask;
-        if (tasks.size() > 0) {
-            tempTask = tasks.get(0);
-            this.removeTask();
+        if (listTasks.size() > 0) {
+            tempTask = listTasks.get(0);
+            this.removeTask(0);
             return tempTask;
         } else return null;
     }
 
-    public ListTask() {
-        this.tasks = new ArrayList<Task>(this.TASK_LENGHT);
-        for (int i = 0; i < this.TASK_LENGHT; i++) addTask(new Task());
-        System.out.println("Создан список задач");
+    public boolean isEmpty() {
+
+        if (listTasks.isEmpty()) {
+            return true;
+        } else
+            return false;
+
     }
 
     public void addTask(Task task) {
-        if (this.tasks.size() > this.TASK_LENGHT) this.tasks.remove(0);
-        this.tasks.add(task);
+        if (this.listTasks.size() > this.TASK_LENGHT) {
+           removeTask(0);
+
+        }
+        this.listTasks.add(task);
+print("В listTask добавлена задача" + task.getName());
+
     }
 
-    public void removeTask() {
-        if (this.tasks.size() > 0)
-            this.tasks.remove(0);
+    public void removeTask(int n) {
+        if (this.listTasks.size() > 0) {
+            this.listTasks.remove(n);
+            print("Из listTask удалена задача" + listTasks.get(n).getName());
+        }
 
-        if (this.autoAddTask == true) this.addTask(new Task());
+        if (this.autoAddListTask == true) this.addTask(new Task());
     }
 
-    public void setAutoAddTask(boolean autoAddTask) {
-        this.autoAddTask = autoAddTask;
+    public boolean isAutoAddListTask() {
+        return autoAddListTask;
+    }
+
+    public void setAutoAddListTask(boolean autoAddListTask) {
+        this.autoAddListTask = autoAddListTask;
     }
 }
