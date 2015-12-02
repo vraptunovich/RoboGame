@@ -1,54 +1,61 @@
 package com.robogame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Created by raptunovich_vk on 02.12.2015.
- */
+
 public class RoboTask {
-    MapRobot mapRobot ;
+    Map<String, Robot> mapRobot = new HashMap<>();
     Log log;
     ListTask listTask;
-    Robot robot;
-    Task task;
+
     ArrayList<String> robotsName;
 
-    public RoboTask(Log log, int amountRobots) {
+    public RoboTask(Log log) {
         this.log = log;
-        this.mapRobot= new MapRobot(this.log);
-        createTaskList();
+        this.listTask=new ListTask(log);
 
-        for (int i = 0; i < amountRobots; i++) {
-            addRobotToMap(true, "");
+    }
+
+    public RoboTask(ListTask listTask, Log log) {
+        this.listTask = listTask;
+        this.log = log;
+    }
+
+    public RoboTask(ListTask listTask, Log log, Map<String, Robot> mapRobot) {
+        this.listTask = listTask;
+        this.log = log;
+        this.mapRobot = mapRobot;
+    }
+
+    public void createTasklist(Task[] task) {
+        for (int i = 0; i < task.length; i++) {
+            listTask.addTask(task[i]);
         }
     }
 
-    private void createTaskList() {
-        listTask = new ListTask(log, true);
-        for (int i = 0; i < ListTask.TASK_LENGHT; i++) {
-            listTask.addTask(new Task(log));
+    public void createTaskList(int n) {
+        for (int i = 0; i < n; i++) {
+            Task task = new Task(log);
         }
     }
 
-    public void addTask(Boolean working, int name, int speed) {
-        listTask.addTask(new Task(this.log, working, name, speed));
-    }
-
-    public void addRobotToMap(boolean auto, String name) {
-        mapRobot.put(name, new Robot(auto, this.log, name, this.listTask));
-    }
-
-    public void StartAllRobots() {
-
-        this.robotsName = mapRobot.robotsName;
-
-        for (int i = 0; i < robotsName.size(); i++) {
-            robot = (Robot) mapRobot.get(robotsName.get(i));
-            robot.run();
-
+    public void createTaskList(int n, boolean working, int name, int speed) {
+        for (int i = 0; i < n; i++) {
+            Task task = new Task(log, working, name, speed);
         }
-
-
     }
+
+    public void createRoboMap(int n) {
+        for (int i = 0; i < n; i++) {
+            Robot robot = new Robot(false, this.log, Integer.toString(n), this.listTask);
+
+            mapRobot.put(robot.getNameRobot(), robot);
+            robot = null;
+        }
+    }
+
+
 
 }

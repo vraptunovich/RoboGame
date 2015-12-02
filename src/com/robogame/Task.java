@@ -7,10 +7,10 @@ public class Task {
     private Log log;
     private String name = "-";
     private int numberName;
-    private Boolean workingNow = false;
+    private boolean workingNow = false;
     private int timeSpeed = 3000;
 
-    public Task(Log log ) {
+    public Task(Log log) {
         this.log = log;
         this.workingNow = false;
 
@@ -20,7 +20,7 @@ public class Task {
         print("Создана задача:" + returnNameTask(numberName));
     }
 
-    public Task(Log log, Boolean workingNow, int nName) {
+    public Task(Log log, boolean workingNow, int nName) {
         this.log = log;
         this.workingNow = workingNow;
 
@@ -30,7 +30,7 @@ public class Task {
         print("Создана задача:" + returnNameTask(numberName));
     }
 
-    public Task(Log log, Boolean workingNow, int nName, int tSpeed) {
+    public Task(Log log, boolean workingNow, int nName, int tSpeed) {
         this.log = log;
         this.workingNow = workingNow;
 
@@ -71,13 +71,19 @@ public class Task {
     private void print(String s) {
         log.addLog(s);
     }
+
+
     //setter and getters===================================================================
 
     public Log getLog() {
         return log;
     }
 
-   private String returnNameTask(int n) {
+    public void setLog(Log log) {
+        this.log = log;
+    }
+
+    private String returnNameTask(int n) {
         String s = "";
         switch (n) {
             case 1:
@@ -99,12 +105,12 @@ public class Task {
         this.timeSpeed = timeSpeed;
     }
 
-    public void setLog(Log log) {
-        this.log = log;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setWorkingNow(Boolean workingNow) {
@@ -115,19 +121,14 @@ public class Task {
         return workingNow;
     }
 
-    public void setTaskNumber(int numberName) {
-        this.numberName = numberName;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getTaskNumber() {
         return numberName;
     }
-    //========================================================
 
+    public void setTaskNumber(int numberName) {
+        this.numberName = numberName;
+    }
+    //========================================================
 
     private void task1() {
 

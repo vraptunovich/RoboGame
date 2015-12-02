@@ -1,6 +1,7 @@
 package com.robogame;
 
 public class Robot extends Thread {
+    private static int numNameRobot = 0;
     private Task task = null;
     private ListTask taskList;
     private boolean finishTask = true;
@@ -9,37 +10,47 @@ public class Robot extends Thread {
     private boolean pause = false;
     private String name;
     private Log log = null;
-private static int numNameRobot=0;
 
     public Robot(boolean autoGetTask, Log log, String name, ListTask taskList) {
         this.autoGetTask = autoGetTask;
         this.log = log;
-        this.name = "Робот №"+Integer.toString(this.numNameRobot);
+        this.name = "Робот №" + Integer.toString(this.numNameRobot);
         this.numNameRobot++;
         this.taskList = taskList;
     }
 
     @Override
-    public void run() {
-
-        while (autoGetTask == false || !taskList.isEmpty()) {
-            if (setTask()) {
-                task.runTask();
-                delteTask();
+    public synchronized  void run() {
+        /*
+            while ( !taskList.isEmpty() || autoGetTask == false ) {
+                if (setTask()) {
+                    task.runTask();
+                    delteTask();
+                }
             }
-        }
+*/
+
+        setTask();
     }
 
 
-    public boolean setTask() {
+    public    boolean setTask() {
 
-        task = taskList.getTask();
-        if (task == null) {
-            return false;
-        } else {
-            return true;
+        if (!taskList.isEmpty()) {
+
+            task = taskList.getTask(0);
+            if (task == null) {
+                print(this.name + " не получил задание ");
+                return false;
+            } else {
+                print(this.name + " получил задание " + task.getName());
+                return true;
+            }
         }
-
+        else {
+            print("Список заданий пуст.");
+            return false;
+        }
     }
 
 
@@ -87,8 +98,10 @@ private static int numNameRobot=0;
         this.pause = pause;
     }
 
-    public Task getTask() {
-        return task;
+    public Task getTask( ) {
+
+        return this.task;
+
     }
 
     public boolean isWorkingNow() {
