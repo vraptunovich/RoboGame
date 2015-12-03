@@ -66,11 +66,28 @@ public class RoboTask {
 
     public void createRoboMap(int n) {
         for (int i = 0; i < n; i++) {
-            Robot robot = new Robot(false, this.log, Integer.toString(n), this.listTask);
+            Robot robot = new Robot(true, this.log, Integer.toString(n), this.listTask);
 
             mapRobot.put(robot.getNameRobot(), robot);
             robot = null;
         }
+    }
+
+    public void startAllRobots ()
+    {
+
+        int i=0;
+        ArrayList<String> tempKeys = new ArrayList<>();
+        ArrayList<Robot> tempValues = new ArrayList<>();
+
+        for (Map.Entry<String, Robot> entry : this.mapRobot.entrySet()) {
+
+            tempKeys.add(entry.getKey());
+            tempValues.add(entry.getValue());
+            tempValues.get(i).start();
+            i++;
+        }
+
     }
 
 

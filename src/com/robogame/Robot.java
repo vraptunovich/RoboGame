@@ -4,9 +4,9 @@ public class Robot extends Thread {
     private static int numNameRobot = 0;
     private Task task = null;
     private ListTask taskList;
-    private boolean finishTask = true;
+    private boolean finishTask ;
     private boolean workingNow = false;
-    private boolean autoGetTask = false;
+    private boolean autoGetTask = true;
     private boolean pause = false;
     private String name;
     private Log log = null;
@@ -17,37 +17,50 @@ public class Robot extends Thread {
         this.name = "Робот №" + Integer.toString(this.numNameRobot);
         this.numNameRobot++;
         this.taskList = taskList;
+        print("Создан " + this.name);
     }
 
     @Override
-    public synchronized  void run() {
-        /*
-            while ( !taskList.isEmpty() || autoGetTask == false ) {
-                if (setTask()) {
-                    task.runTask();
-                    delteTask();
-                }
-            }
-*/
-
+    public synchronized void run() {
         setTask();
+        this.workingNow = true;
+        while (this.workingNow) {
+            task.runTask();
+
+            if (this.autoGetTask) {
+                workingNow = setTask();
+            } else {
+                this.workingNow = false;
+                delteTask();
+            }
+        }
+
+
     }
 
+public void BreakeRobot ()
+{
+    this.interrupt();
 
-    public    boolean setTask() {
+}
+
+
+
+    public boolean setTask() {
 
         if (!taskList.isEmpty()) {
 
-            task =(Task) taskList.get(0);
+            task = (Task) taskList.get(0);
             if (task == null) {
                 print(this.name + " не получил задание ");
                 return false;
             } else {
                 print(this.name + " получил задание " + task.getName());
+                this.pause = false;
+
                 return true;
             }
-        }
-        else {
+        } else {
             print("Список заданий пуст.");
             return false;
         }
@@ -98,7 +111,7 @@ public class Robot extends Thread {
         this.pause = pause;
     }
 
-    public Task getTask( ) {
+    public Task getTask() {
 
         return this.task;
 

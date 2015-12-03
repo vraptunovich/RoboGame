@@ -138,6 +138,8 @@ public class Task {
         // System.out.println("Задача вычисления факторила числа " + Integer.toString(n));
         print("Запущена задача: " + returnNameTask(this.numberName) + " для числа" + Integer.toString(n));
         workingNow = true;
+        rnd = new Random(System.currentTimeMillis());
+         int k = 1000 + rnd.nextInt(1500);
         try {
             Thread.sleep(timeSpeed + 2000);
             do {
@@ -146,7 +148,7 @@ public class Task {
                     result *= i;
                     print("(задача вычисления факториала)Промежуточный результат :" + result + "...");
                     //System.out.println(result + "...вычисляю...");
-                    Thread.sleep(timeSpeed + 2000);
+                    Thread.sleep(timeSpeed + 2000+k);
                 }
                 // System.out.print("Факторил числа " + n + " равен:");
                 // System.out.println(result);
@@ -216,7 +218,7 @@ public class Task {
             Thread.sleep(timeSpeed + 1000);
             Random rnd = new Random(System.currentTimeMillis());
 // Получаем случайное число в диапазоне от min до max (включительно)
-            int n = 20 + rnd.nextInt(30);
+            int n = 10 + rnd.nextInt(20);
             System.out.println("обратный отсчет... ");
             print(n + "..." + "  задача: имитация взрыва(обратный отсчет)");
             Thread.sleep(timeSpeed + 1000);

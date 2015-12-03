@@ -72,6 +72,14 @@ public class ListTask extends ArrayList {
         return o;
     }
 
+    @Override
+    public Object get(int index) {
+        Task tempTask=(Task)super.get(index);
+        super.remove(index);
+        print("Робот достал задачу: "+tempTask.getName()+ "из списка");
+        return tempTask;
+    }
+
     public boolean isAutoAddListTask() {
         return autoAddListTask;
     }
