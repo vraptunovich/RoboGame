@@ -9,8 +9,8 @@ import java.util.List;
 public class ListTask extends ArrayList {
 
 
-    public static int TASK_LENGHT = 3;
-    private List<Task> listTasks = new ArrayList<Task>(this.TASK_LENGHT);
+    private int TASK_LENGHT = 3;
+    // private List<Task> listTasks = new ArrayList<Task>(this.TASK_LENGHT);
     private boolean autoAddListTask = false;
     private Log log;
 
@@ -31,50 +31,45 @@ public class ListTask extends ArrayList {
     }
 
     public ListTask(List<Task> tasks, boolean autoAddListTask, Log log) {
-        this.listTasks = tasks;
         this.autoAddListTask = autoAddListTask;
         this.log = log;
     }
-/*
-    public Task getTask(int n) {
-        Task tempTask;
-        if (listTasks.size() > 0) {
-            tempTask = listTasks.get(n);
-            this.removeTask(n);
-            return tempTask;
-        } else return null;
+
+    public int getTASK_LENGHT() {
+        return TASK_LENGHT;
     }
-*/
+
+    public void setTASK_LENGHT(int TASK_LENGHT) {
+        this.TASK_LENGHT = TASK_LENGHT;
+    }
+
     private void print(String s) {
         log.addLog(s);
     }
 
-    public boolean isEmpty() {
-
-        if (listTasks.isEmpty()) {
-            return true;
-        } else
-            return false;
-
+    @Override
+    public boolean add(Object o) {
+        if (this.size() > this.TASK_LENGHT) {
+            this.remove(0);
+        }
+        boolean flag = super.add(o);
+        Task tempTask = (Task) o;
+        print("В listTask добавлена задача" + tempTask.getName());
+        return flag;
     }
 
-    public void addTask(Task task) {
-        if (this.listTasks.size() > this.TASK_LENGHT) {
-            removeTask(0);
+    @Override
+    public Object remove(int index) {
+        Object o = null;
+        if (!this.isEmpty()) {
 
+            Task tempTask = (Task) this.get(index);
+            print("Из listTask удалена задача" + tempTask.getName());
+            o = super.remove(index);
         }
-        this.listTasks.add(task);
-        print("В listTask добавлена задача" + task.getName());
+        if (this.autoAddListTask == true) this.add(new Task());
 
-    }
-
-    public void removeTask(int n) {
-        if (this.listTasks.size() > 0) {
-            this.listTasks.remove(n);
-            print("Из listTask удалена задача" + listTasks.get(n).getName());
-        }
-
-        if (this.autoAddListTask == true) this.addTask(new Task());
+        return o;
     }
 
     public boolean isAutoAddListTask() {

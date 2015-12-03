@@ -31,21 +31,34 @@ public class RoboTask {
 
     public void createTasklist(Task[] task) {
         for (int i = 0; i < task.length; i++) {
-            listTask.addTask(task[i]);
+            if (i > listTask.getTASK_LENGHT() -1) {
+                break;
+            }
+            listTask.add(task[i]);
         }
     }
 
     public void createTaskList(int n) {
         for (int i = 0; i < n; i++) {
+            if (i > listTask.getTASK_LENGHT()-1) {
+                break;
+            }
             Task task = new Task(log);
+
+            listTask.add(task);
+            task = null;
         }
     }
 
     public void createTaskList(int n, boolean working, int name, int speed) {
         ListTask ltask = new ListTask(this.log);
         for (int i = 0; i < n; i++) {
+            if (i > listTask.getTASK_LENGHT()-1) {
+                break;
+            }
             Task task = new Task(log, working, name, speed);
-            ltask.addTask(task);
+
+            ltask.add(task);
             task = null;
         }
         this.listTask = ltask;
